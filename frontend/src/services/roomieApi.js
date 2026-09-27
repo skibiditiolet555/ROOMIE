@@ -1,7 +1,7 @@
-const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+import { backendUrl } from '../lib/backendUrl'
 
 async function post(path, body) {
-  const res = await fetch(`${BASE_URL}${path}`, {
+  const res = await fetch(backendUrl(path), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
@@ -61,7 +61,7 @@ export function deleteItem({ image, item, style, rerender = true }) {
 }
 
 export function checkHealth() {
-  return fetch(`${BASE_URL}/health`).then((res) => res.json())
+  return fetch(backendUrl('/health')).then((res) => res.json())
 }
 
 /** Geometry for the photo currently displayed, independent of the shopping plan. */

@@ -1,12 +1,12 @@
 import { useSyncExternalStore } from 'react'
 import { REAL_PRODUCT_CATALOG } from '../data/realProductCatalog'
 import { getPrefs, usePrefs } from './prefs'
+import { backendUrl } from './backendUrl'
 
 // Live IKEA Thailand listings (real names, prices, photos, product pages) via
 // the backend. Cached in localStorage for a few hours; the static estimate
 // list is only a fallback when the store can't be reached. In English mode the
 // English IKEA Thailand names and product pages are used.
-const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 const KEY = 'roomie.liveCatalog.v2'
 const TTL = 6 * 60 * 60 * 1000
 
@@ -32,7 +32,7 @@ function load() {
       if (Date.now() - saved.at <= TTL) return
     }
   } catch { /* ignore */ }
-  fetch(`${BASE_URL}/api/products?limit=12`)
+  fetch(backendUrl('/api/products?limit=12'))
     .then((res) => (res.ok ? res.json() : Promise.reject(new Error(res.status))))
     .then(({ items }) => {
       const raw = items.map(toProduct)

@@ -1,4 +1,4 @@
-const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+import { backendUrl } from './backendUrl'
 
 export const api = {
   async post(path, body, { timeoutMs } = {}) {
@@ -6,7 +6,7 @@ export const api = {
     const timeout = controller ? setTimeout(() => controller.abort(), timeoutMs) : null
     let res
     try {
-      res = await fetch(`${BASE_URL}${path}`, {
+      res = await fetch(backendUrl(path), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),

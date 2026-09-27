@@ -1,10 +1,12 @@
 import sqlite3
+import os
 from contextlib import contextmanager
 from pathlib import Path
 
 # backend/app/services/db.py -> backend/auth.db, so this works regardless of
 # the process's current working directory (unlike a bare relative path).
-DB_PATH = Path(__file__).resolve().parent.parent.parent / "auth.db"
+DB_PATH = Path(os.getenv("ROOMIE_DB_PATH", Path(__file__).resolve().parent.parent.parent / "auth.db"))
+DB_PATH.parent.mkdir(parents=True, exist_ok=True)
 
 
 def _connect() -> sqlite3.Connection:

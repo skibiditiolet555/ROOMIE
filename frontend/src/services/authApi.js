@@ -1,4 +1,4 @@
-const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+import { backendUrl } from '../lib/backendUrl'
 const TOKEN_KEY = 'roomie_token'
 
 export function getToken() {
@@ -22,7 +22,7 @@ async function request(path, { method = 'GET', body, token } = {}) {
   const headers = { 'Content-Type': 'application/json' }
   if (token) headers.Authorization = `Bearer ${token}`
 
-  const res = await fetch(`${BASE_URL}${path}`, {
+  const res = await fetch(backendUrl(path), {
     method,
     headers,
     body: body !== undefined ? JSON.stringify(body) : undefined,
