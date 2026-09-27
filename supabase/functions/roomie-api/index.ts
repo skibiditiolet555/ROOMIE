@@ -371,8 +371,11 @@ Deno.serve(async (request: Request) => {
   if (request.method === "OPTIONS") return new Response("ok", { headers: cors });
   try {
     const url = new URL(request.url);
-    const marker = "/functions/v1/roomie-api";
-    const path = url.pathname.includes(marker) ? url.pathname.slice(url.pathname.indexOf(marker) + marker.length) || "/" : url.pathname;
+    const markers = ["/functions/v1/roomie-api", "/roomie-api"];
+    const marker = markers.find((value) => url.pathname.includes(value));
+    const path = marker
+      ? url.pathname.slice(url.pathname.indexOf(marker) + marker.length) || "/"
+      : url.pathname;
     const body = request.method === "GET" || request.method === "DELETE" ? {} : await request.json().catch(() => ({}));
     return json(await routeApi(path, request, body, url));
   } catch (error) {
