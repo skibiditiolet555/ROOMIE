@@ -1,12 +1,19 @@
-# Production deployment
+# Supabase backend deployment
 
-The Netlify site builds only `frontend/`; it does not run the FastAPI app. The Netlify rules proxy `/api/*` and `/health` to the Render API, keeping browser requests same-origin. The default API host matches the service name in `render.yaml`.
+The production API runs in the Supabase Edge Function `roomie-api`. Netlify serves the React frontend only. The FastAPI app under `backend/` remains available for local development; it is not part of production hosting.
 
-1. In Render, create a new Blueprint from this repository and apply `render.yaml`. The service is named `roomie555-api`; Render will provide its public URL after creation.
-2. Add the required secret values to the Render service: `OPENAI_API_KEY`, `GROQ_API_KEY`, `SUPABASE_URL`, and `SUPABASE_SERVICE_ROLE_KEY`. Keep service-role and provider keys out of the frontend.
-3. Ensure the Render service's public URL is `https://roomie555-api.onrender.com`. If Render assigns a different URL, update the two proxy targets in `netlify.toml` to match and deploy the repository to Netlify.
-4. Check `https://roomie555.netlify.app/health`. It should return JSON with `status: "ok"` and `openai_key_configured: true` after the Render service is live.
+## One-time Supabase setup
 
-The Render blueprint allows the Netlify origin through CORS and persists local authentication data on a disk. The API requires a paid Render instance because it uses a persistent disk. YOLOE segmentation dependencies are included; model weights are downloaded by the service when first needed.
+1. In the Supabase dashboard, sign in to the project `dtwvvcfqokatlaikhlnm`. The frontend is configured for `https://dtwvvcfqokatlaikhlnm.supabase.co`.
+2. Apply the database migration. From a logged-in Supabase CLI, run `supabase link --project-ref dtwvvcfqokatlaikhlnm` and `supabase db push`. Or run `supabase/add_roomie_auth_tables.sql` in **SQL Editor**. This creates the custom Roomie account and session tables; existing `rooms` tables are still used for saved rooms.
+3. Deploy with `supabase functions deploy roomie-api --no-verify-jwt`. The CLI links this to the project above. The function validates Roomie's own session tokens on protected routes.
+4. Add `OPENAI_API_KEY` and `GROQ_API_KEY` as Edge Function secrets in **Edge Functions → Secrets**. Supabase injects the project URL and secret database key into Edge Functions; do not put a service-role/secret key in the frontend.
+5. Set Netlify environment variables `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY`, then trigger a frontend deploy.
 
-For local development, `VITE_API_URL` may be omitted and the frontend continues to use `http://localhost:8000`.
+After deployment, verify `https://dtwvvcfqokatlaikhlnm.supabase.co/functions/v1/roomie-api/health`; it should return JSON with `status: "ok"`. Then reload the Netlify site.
+
+## Runtime notes
+
+Supabase Edge Functions run TypeScript/Deno, so the production API is implemented in `supabase/functions/roomie-api/index.ts`. Roomie object segmentation runs in the browser using its existing lightweight segmentation utilities; PyTorch/YOLO models cannot fit the hosted Edge Function runtime limits. AI image requests still require a separately billed OpenAI API account. The Supabase Free plan has request, storage, and compute limits and may pause inactive projects; confirm current limits in the Supabase dashboard before launch.
+
+For local development, omit `VITE_API_URL` and the frontend uses `http://localhost:8000` when running in development mode.

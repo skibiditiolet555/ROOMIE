@@ -1,7 +1,7 @@
 import { useSyncExternalStore } from 'react'
 import { REAL_PRODUCT_CATALOG } from '../data/realProductCatalog'
 import { getPrefs, usePrefs } from './prefs'
-import { backendUrl } from './backendUrl'
+import { backendHeaders, backendUrl } from './backendUrl'
 
 // Live IKEA Thailand listings (real names, prices, photos, product pages) via
 // the backend. Cached in localStorage for a few hours; the static estimate
@@ -32,7 +32,7 @@ function load() {
       if (Date.now() - saved.at <= TTL) return
     }
   } catch { /* ignore */ }
-  fetch(backendUrl('/api/products?limit=12'))
+  fetch(backendUrl('/api/products?limit=12'), { headers: backendHeaders(null, false) })
     .then((res) => (res.ok ? res.json() : Promise.reject(new Error(res.status))))
     .then(({ items }) => {
       const raw = items.map(toProduct)

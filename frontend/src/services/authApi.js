@@ -1,4 +1,4 @@
-import { backendUrl } from '../lib/backendUrl'
+import { backendHeaders, backendUrl } from '../lib/backendUrl'
 const TOKEN_KEY = 'roomie_token'
 
 export function getToken() {
@@ -19,8 +19,7 @@ export function setToken(token) {
 }
 
 async function request(path, { method = 'GET', body, token } = {}) {
-  const headers = { 'Content-Type': 'application/json' }
-  if (token) headers.Authorization = `Bearer ${token}`
+  const headers = backendHeaders(token)
 
   const res = await fetch(backendUrl(path), {
     method,

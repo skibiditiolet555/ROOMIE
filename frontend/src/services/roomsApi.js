@@ -1,8 +1,7 @@
-import { backendUrl } from '../lib/backendUrl'
+import { backendHeaders, backendUrl } from '../lib/backendUrl'
 
 async function request(path, { method = 'GET', body, token } = {}) {
-  const headers = { 'Content-Type': 'application/json' }
-  if (token) headers.Authorization = `Bearer ${token}`
+  const headers = backendHeaders(token)
 
   const res = await fetch(backendUrl(path), {
     method,

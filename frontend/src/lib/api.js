@@ -1,4 +1,4 @@
-import { backendUrl } from './backendUrl'
+import { backendHeaders, backendUrl } from './backendUrl'
 
 export const api = {
   async post(path, body, { timeoutMs } = {}) {
@@ -8,7 +8,7 @@ export const api = {
     try {
       res = await fetch(backendUrl(path), {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: backendHeaders(),
         body: JSON.stringify(body),
         signal: controller?.signal,
       })
@@ -26,10 +26,8 @@ export const api = {
   },
 }
 
-// GPT compares the before/after photos and lists what the redesign ADDED;
-// the backend then cuts each one out with local YOLOE segmentation. Objects
-// come back with an `outline` ([[x%, y%], ...]) only when a real mask was
-// found — never a guessed box.
+// GPT compares before/after photos and lists what the redesign ADDED. Fine
+// object outlines are traced in the browser with SlimSAM/MediaPipe.
 export async function detectObjects({ image, originalImage, budget, style }) {
   const result = await api.post('/api/decisions/detect', {
     image_url: image,
@@ -51,25 +49,25 @@ export async function detectObjects({ image, originalImage, budget, style }) {
   }
 }
 
-// Pixel-level outlines for objects we already know about (e.g. from the
-// Furnish step) — free, runs on the backend machine, no OpenAI call.
+// Pixel-level outlines run locally in the browser; Supabase Edge Functions
+// do not host the YOLOE/PyTorch model used by the former Python API.
 export async function segmentObjects({ image, objects, originalImage = null }) {
-  const result = await api.post('/api/decisions/segment', {
-    image_url: image,
-    original_image_url: originalImage,
-    items: objects.map((item) => ({
-      id: item.id,
-      name: item.name,
-      category: item.category ?? '',
-      label: item.yoloLabel ?? null,
-      x: item.x ?? null,
-      y: item.y ?? null,
-    })),
-  })
+  const { segmentAtPoint } = await import('../utils/segmentation')
+  const img = new Image()
+  img.src = image
+  await img.decode()
+  const traced = await Promise.all(objects.map(async (item) => {
+    const x = Number(item.x ?? (item.bbox ? item.bbox.x + item.bbox.w / 2 : 50)) / 100
+    const y = Number(item.y ?? (item.bbox ? item.bbox.y + item.bbox.h / 2 : 50)) / 100
+    try {
+      const outline = await segmentAtPoint(img, x, y, item.name, item.bbox ?? null)
+      return [item.id, { id: item.id, matched: true, outline, score: null }]
+    } catch {
+      return [item.id, { id: item.id, matched: false, outline: null, score: null }]
+    }
+  }))
   return {
-    found: Object.fromEntries(result.objects.map((item) => [item.id, item])),
-    // Other furniture in the photo (already in the room, not just what the AI
-    // added) so it can be selected as well.
-    extras: result.extras ?? [],
+    found: Object.fromEntries(traced),
+    extras: [],
   }
 }

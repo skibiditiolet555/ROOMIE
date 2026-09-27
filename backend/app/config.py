@@ -43,11 +43,8 @@ class Settings(BaseSettings):
 
     cors_origins: str = "http://localhost:5173,http://127.0.0.1:5173"
 
-    # Basic (non-Supabase) authentication: users, sessions and password
-    # resets live in a local SQLite file (see app/services/db.py). Rooms
-    # still live in Supabase Postgres, but this backend is the only thing
-    # that talks to it (via the service-role key below), so the frontend
-    # never needs Supabase credentials or auth.uid() to enforce ownership.
+    # Roomie authentication, sessions, and rooms use Supabase Postgres via
+    # the service-role key below. Keep this key on the backend only.
     session_ttl_days: int = 30
 
     supabase_url: str = ""

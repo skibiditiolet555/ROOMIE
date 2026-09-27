@@ -5,9 +5,8 @@ import { containsPoint, imageKey } from '../../utils/selectionGeometry'
 
 // Real pixel-level silhouettes, not boxes: ChatGPT (via detectItems, upstream
 // of this component) has already found each item's rough position in the
-// photo; this component sends that name + position to the backend, which
-// runs local YOLOE-seg to find the matching mask and OpenCV to reduce it to a
-// clean outline polygon. One batched call covers every item in the photo —
+// photo; this component traces a matching mask locally in the browser. One
+// batched client operation covers every item in the photo —
 // nothing is guessed, and an item YOLOE can't confidently match is simply
 // left without an outline rather than shown as a rectangle.
 const cache = new Map()
@@ -63,8 +62,8 @@ export default function ObjectSelectionCanvas({ image, items, highlightedIds, se
       }
     }).catch((error) => {
       const reason = /quota|billing|credit/i.test(error.message) ? 'The AI service has no available credits.'
-        : /ultralytics|opencv|503/i.test(error.message) ? 'Object tracing is unavailable on the server.'
-        : /connection|timeout/i.test(error.message) ? 'The server could not be reached.'
+        : /ultralytics|opencv|503/i.test(error.message) ? 'Object tracing is unavailable.'
+        : /connection|timeout/i.test(error.message) ? 'The request could not be completed.'
         : 'Automatic object tracing is unavailable.'
       if (!cancelled) setNotice(`${reason} You can still pick items from the list.`)
     }).finally(() => { if (!cancelled) setScanning(false) })
@@ -76,7 +75,7 @@ export default function ObjectSelectionCanvas({ image, items, highlightedIds, se
     const x = (event.clientX - rect.left) / rect.width * 100
     const y = (event.clientY - rect.top) / rect.height * 100
     // Prefer a real traced outline; fall back to the item's known box so it's
-    // still clickable even when YOLOE couldn't confidently match it — the box
+    // still clickable even when segmentation couldn't confidently match it — the box
     // is only ever used for hit-testing, never drawn.
     const candidates = items.filter((item) => {
       const outline = outlines[item.id]

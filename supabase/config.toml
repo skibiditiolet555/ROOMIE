@@ -1,0 +1,4 @@
+project_id = "dtwvvcfqokatlaikhlnm"
+
+[functions.roomie-api]
+verify_jwt = false

@@ -6,7 +6,7 @@ from datetime import datetime, timedelta, timezone
 from fastapi import Depends, Header, HTTPException
 
 from app.config import get_settings
-from app.services.db import get_connection
+from app.services.db import request
 
 PBKDF2_ITERATIONS = 200_000
 
@@ -42,25 +42,25 @@ def register_user(email: str, password: str, name: str) -> dict:
         raise HTTPException(status_code=400, detail="Password must be at least 6 characters.")
 
     display_name = name.strip() or email.split("@")[0]
-    user_id = str(uuid.uuid4())
     password_hash = _hash_password(password)
-
-    with get_connection() as conn:
-        existing = conn.execute("SELECT id FROM users WHERE email = ?", (email,)).fetchone()
-        if existing:
-            raise HTTPException(status_code=409, detail="An account with this email already exists.")
-        conn.execute(
-            "INSERT INTO users (id, email, name, password_hash, created_at) VALUES (?, ?, ?, ?, ?)",
-            (user_id, email, display_name, password_hash, _now().isoformat()),
-        )
-
-    return {"id": user_id, "email": email, "name": display_name}
+    try:
+        rows = request("roomie_users", "POST", json={
+            "id": str(uuid.uuid4()),
+            "email": email,
+            "name": display_name,
+            "password_hash": password_hash,
+        }, headers={"Prefer": "return=representation"})
+    except HTTPException as exc:
+        if exc.status_code == 409:
+            raise HTTPException(status_code=409, detail="An account with this email already exists.") from exc
+        raise
+    return _row_to_user(rows[0])
 
 
 def authenticate_user(email: str, password: str) -> dict:
     email = email.strip().lower()
-    with get_connection() as conn:
-        row = conn.execute("SELECT * FROM users WHERE email = ?", (email,)).fetchone()
+    rows = request("roomie_users", params={"email": f"eq.{email}", "select": "*", "limit": "1"})
+    row = rows[0] if rows else None
 
     if not row or not _verify_password(password, row["password_hash"]):
         raise HTTPException(status_code=401, detail="Incorrect email or password.")
@@ -72,37 +72,35 @@ def create_session(user_id: str) -> str:
     settings = get_settings()
     token = secrets.token_urlsafe(32)
     expires_at = _now() + timedelta(days=settings.session_ttl_days)
-    with get_connection() as conn:
-        conn.execute(
-            "INSERT INTO sessions (token, user_id, expires_at) VALUES (?, ?, ?)",
-            (token, user_id, expires_at.isoformat()),
-        )
+    request("roomie_sessions", "POST", json={
+        "token": token,
+        "user_id": user_id,
+        "expires_at": expires_at.isoformat(),
+    })
     return token
 
 
 def get_user_by_token(token: str) -> dict | None:
-    with get_connection() as conn:
-        row = conn.execute(
-            """
-            SELECT users.* FROM sessions
-            JOIN users ON users.id = sessions.user_id
-            WHERE sessions.token = ? AND sessions.expires_at > ?
-            """,
-            (token, _now().isoformat()),
-        ).fetchone()
-    return _row_to_user(row) if row else None
+    sessions = request("roomie_sessions", params={
+        "token": f"eq.{token}",
+        "expires_at": f"gt.{_now().isoformat()}",
+        "select": "user_id",
+        "limit": "1",
+    })
+    if not sessions:
+        return None
+    users = request("roomie_users", params={"id": f"eq.{sessions[0]['user_id']}", "select": "*", "limit": "1"})
+    return _row_to_user(users[0]) if users else None
 
 
 def delete_session(token: str) -> None:
-    with get_connection() as conn:
-        conn.execute("DELETE FROM sessions WHERE token = ?", (token,))
+    request("roomie_sessions", "DELETE", params={"token": f"eq.{token}"})
 
 
 def email_exists(email: str) -> bool:
     email = email.strip().lower()
-    with get_connection() as conn:
-        row = conn.execute("SELECT id FROM users WHERE email = ?", (email,)).fetchone()
-    return row is not None
+    rows = request("roomie_users", params={"email": f"eq.{email}", "select": "id", "limit": "1"})
+    return bool(rows)
 
 
 def set_password_by_email(email: str, new_password: str) -> dict:
@@ -115,16 +113,14 @@ def set_password_by_email(email: str, new_password: str) -> dict:
     if len(new_password) < 6:
         raise HTTPException(status_code=400, detail="Password must be at least 6 characters.")
 
-    with get_connection() as conn:
-        row = conn.execute("SELECT * FROM users WHERE email = ?", (email,)).fetchone()
-        if not row:
-            raise HTTPException(status_code=404, detail="No account found with that email.")
+    rows = request("roomie_users", params={"email": f"eq.{email}", "select": "id", "limit": "1"})
+    if not rows:
+        raise HTTPException(status_code=404, detail="No account found with that email.")
 
-        password_hash = _hash_password(new_password)
-        conn.execute("UPDATE users SET password_hash = ? WHERE id = ?", (password_hash, row["id"]))
-        user_row = conn.execute("SELECT * FROM users WHERE id = ?", (row["id"],)).fetchone()
-
-    return _row_to_user(user_row)
+    password_hash = _hash_password(new_password)
+    updated = request("roomie_users", "PATCH", params={"id": f"eq.{rows[0]['id']}"},
+                      json={"password_hash": password_hash}, headers={"Prefer": "return=representation"})
+    return _row_to_user(updated[0])
 
 
 async def get_current_token(authorization: str | None = Header(default=None)) -> str:

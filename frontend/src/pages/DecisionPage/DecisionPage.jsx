@@ -123,8 +123,8 @@ function centroidOf(polygon) {
   ]
 }
 
-// Cuts each object out of the redesigned photo with the backend's local
-// YOLOE segmentation (free, no OpenAI call) and swaps the outline in as it
+// Cuts each object out of the redesigned photo with local browser
+// segmentation (free, no OpenAI call) and swaps the outline in as it
 // arrives. An object it can't find confidently gets NO outline — it stays in
 // the list, but nothing is drawn where a guess might be wrong. The same pass
 // also returns furniture that was ALREADY in the room, which is offered as
@@ -211,7 +211,7 @@ async function restoreObjectRegion(currentUrl, beforeUrl, outlines) {
   return out.toDataURL('image/jpeg', 0.95)
 }
 
-// Only objects with a real traced outline (from YOLOE segmentation, which
+// Only objects with a real traced outline (from local segmentation, which
 // sets `traced`) are drawn on the photo. The vision model's own rough
 // `outline` estimate is NOT enough — it's usually a few-point near-rectangle,
 // and drawing it produced boxy highlights instead of the real silhouette.

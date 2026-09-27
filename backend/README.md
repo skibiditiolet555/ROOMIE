@@ -23,7 +23,13 @@ uvicorn app.main:app --reload --port 8000
 Interactive docs: http://localhost:8000/docs
 
 The frontend calls it through `src/services/roomieApi.js`, which points at
-`http://localhost:8000` by default (override with `VITE_API_URL`).
+`http://localhost:8000` during development by default (override with `VITE_API_URL`).
+Production requests are proxied through Netlify to the deployed API.
+
+Authentication users and sessions are stored in Supabase Postgres. Apply
+`supabase/add_roomie_auth_tables.sql` to the Supabase project before starting
+the API, and set `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` in the backend
+environment. The service-role key must never be exposed to the frontend.
 
 ## Endpoints
 

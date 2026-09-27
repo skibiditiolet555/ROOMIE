@@ -1,9 +1,9 @@
-import { backendUrl } from '../lib/backendUrl'
+import { backendHeaders, backendUrl } from '../lib/backendUrl'
 
 async function post(path, body) {
   const res = await fetch(backendUrl(path), {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: backendHeaders(),
     body: JSON.stringify(body),
   })
 
