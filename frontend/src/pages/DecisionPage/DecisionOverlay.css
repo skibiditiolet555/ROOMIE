@@ -1,0 +1,184 @@
+.decision-outline-shape {
+  fill: rgba(255, 255, 255, 0.025);
+  stroke: rgba(255, 255, 255, 0.7);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: fill 0.2s ease, stroke-width 0.2s ease, filter 0.2s ease;
+}
+
+.decision-outline-shape.is-keep {
+  fill: rgba(112, 196, 107, 0.055);
+  stroke: #70c46b;
+  filter: drop-shadow(0 0 2px rgba(112, 196, 107, 0.5));
+}
+
+.decision-outline-shape.is-replace {
+  fill: rgba(225, 163, 58, 0.055);
+  stroke: #e1a33a;
+  filter: drop-shadow(0 0 2px rgba(225, 163, 58, 0.5));
+}
+
+.decision-outline-shape.is-remove {
+  fill: rgba(221, 104, 94, 0.05);
+  stroke: #dd685e;
+  filter: drop-shadow(0 0 2px rgba(221, 104, 94, 0.48));
+}
+
+.decision-outline-shape.is-active {
+  fill: rgba(255, 214, 112, 0.36);
+  stroke: #fff2bd;
+  stroke-width: 4;
+  filter: drop-shadow(0 0 5px rgba(255, 218, 122, 0.95)) drop-shadow(0 0 12px rgba(255, 196, 72, 0.75));
+  animation: decision-object-pulse 1.6s ease-in-out infinite alternate;
+}
+
+.decision-outline-shape.is-muted {
+  opacity: 0.38;
+}
+
+.decision-object-callout {
+  position: absolute;
+  z-index: 4;
+  max-width: min(72%, 240px);
+  padding: 6px 10px;
+  overflow: hidden;
+  color: #20170b;
+  background: #fff0b8;
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-radius: 7px;
+  box-shadow: 0 3px 16px rgba(0, 0, 0, 0.55), 0 0 18px rgba(255, 208, 91, 0.65);
+  font: 700 12px/1.2 var(--font-sans);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  pointer-events: none;
+  transform: translate(-50%, -125%);
+}
+
+@keyframes decision-object-pulse {
+  from { filter: drop-shadow(0 0 4px rgba(255, 218, 122, 0.8)) drop-shadow(0 0 9px rgba(255, 196, 72, 0.55)); }
+  to { filter: drop-shadow(0 0 7px rgba(255, 242, 189, 1)) drop-shadow(0 0 17px rgba(255, 196, 72, 0.9)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .decision-outline-shape.is-active { animation: none; }
+}
+
+.decision-hotspot {
+  background: #70b866;
+  border-width: 2px;
+  border-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.38), 0 0 0 1px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.decision-object-markers { display: contents; }
+
+.decision-hotspot.is-replace {
+  background: #d89a32;
+}
+
+.decision-hotspot.is-remove {
+  background: #d95f55;
+}
+
+.decision-hotspot:hover,
+.decision-hotspot.is-active {
+  transform: translate(-50%, -50%) scale(1.13);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.44), 0 0 0 3px rgba(255, 255, 255, 0.2);
+}
+.decision-image-history{position:absolute;left:14px;bottom:14px;z-index:3;display:flex;gap:6px}.decision-image-history button{min-height:32px;padding:0 12px;color:var(--color-cream);font:600 10px var(--font-sans);background:rgba(19,14,13,.82);border:1px solid rgba(220,204,170,.3);border-radius:999px;cursor:pointer;backdrop-filter:blur(8px)}.decision-image-history button:disabled{cursor:not-allowed;opacity:.4}
+
+.decision-object-chips{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 16px}.decision-object-chips button{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.05);color:inherit;font:inherit;font-size:12px;cursor:pointer}.decision-object-chips button.is-active{border-color:#fff;background:rgba(255,255,255,.14)}.decision-object-chips button.is-keep svg{color:#7fd88f}.decision-object-chips button.is-replace svg{color:#f0b35a}.decision-object-chips button.is-remove svg{color:#f28b82}.decision-object-chips small{opacity:.55;font-size:10px}.decision-tracing{font-size:12px;opacity:.7}
+
+.decision-picker{display:flex;flex-direction:column;gap:10px;margin:4px 0 12px}.decision-picker-head{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}.decision-picker-head small{opacity:.6;font-weight:400}.decision-picker-head>div{display:flex;gap:6px}.decision-picker select{background:rgba(255,255,255,.08);color:inherit;border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:5px 8px;font:inherit;font-size:12px}.decision-picker select option{background:#1c1610;color:#fff}.decision-picker-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;max-height:340px;overflow-y:auto;padding-right:4px;overscroll-behavior:contain}.decision-picker-list button{display:flex;flex-direction:column;gap:3px;text-align:left;padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.05);color:inherit;font:inherit;cursor:pointer}.decision-picker-list button:hover:not(:disabled){border-color:rgba(255,255,255,.5)}.decision-picker-list button.is-picked{border-color:#f0b35a;background:rgba(240,179,90,.14)}.decision-picker-list button.is-over{opacity:.4;cursor:not-allowed}.decision-picker-list .decision-picker-store{font-size:10px;text-transform:uppercase;letter-spacing:.06em;opacity:.65}.decision-picker-list strong{font-size:12px;line-height:1.35}.decision-picker-list small{font-size:11px;opacity:.6}.decision-picker-list b{font-size:13px;margin-top:2px}.decision-picker-list i{font-style:normal;font-size:11px;color:#f0b35a}
+
+.decision-browse-button{height:40px;border-radius:10px;border:1px dashed rgba(240,179,90,.6);background:rgba(240,179,90,.08);color:#f0b35a;font:inherit;font-size:13px;font-weight:700;cursor:pointer}.decision-browse-button:hover{background:rgba(240,179,90,.16)}.decision-picked{display:flex;align-items:center;gap:10px;padding:8px;border-radius:10px;border:1px solid rgba(240,179,90,.5);background:rgba(240,179,90,.08);color:inherit;font:inherit;text-align:left;cursor:pointer}.decision-picked i{width:40px;height:40px;border-radius:8px;flex-shrink:0}.decision-picked span{display:grid;gap:1px}.decision-picked small{font-size:10px;color:#f0b35a}.decision-picked strong{font-size:13px;color:var(--color-white)}.decision-picked em{font-style:normal;font-size:12px;color:var(--color-cream)}
+
+/* Replace mode: give the side panel room for the product browser beside the photo. */
+.decision-workspace.is-replacing{grid-template-columns:minmax(0,1.05fr) minmax(460px,1fr)}
+@media(max-width:1050px){.decision-workspace.is-replacing{grid-template-columns:1fr}}
+
+/* A removed object: faint dashed ghost of its shape, still clickable. */
+.decision-outline-shape.is-ghost {
+  fill: rgba(255, 255, 255, 0.04) !important;
+  stroke-dasharray: 1.2 1 !important;
+  opacity: 0.55;
+}
+
+.decision-object-stepper {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.decision-object-stepper button {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: transparent;
+  color: var(--color-cream);
+  font: inherit;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.decision-object-stepper button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.decision-bring-back {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px dashed rgba(240, 179, 90, 0.45);
+  background: rgba(240, 179, 90, 0.06);
+}
+
+.decision-bring-back p {
+  margin: 0;
+  font-size: 12px;
+  color: var(--color-cream);
+}
+
+.decision-bring-back button {
+  height: 38px;
+  border-radius: 10px;
+  border: none;
+  background: #f0b35a;
+  color: #1c1511;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.decision-bring-back button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.decision-not-in-photo {
+  display: block;
+  margin-top: 6px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-warm-gray);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+/* Selected option icon: accent background with a dark glyph. The original
+   rule used background:currentColor on an element whose own color is the
+   same dark tone, so the icon (e.g. the Keep ✓) was invisible. */
+.decision-options label.is-selected.is-keep > b { background: #7fbf6a; color: #1b1411; }
+.decision-options label.is-selected.is-replace > b { background: #e0a94a; color: #1b1411; }
+.decision-options label.is-selected.is-remove > b { background: #d1594f; color: #1b1411; }

@@ -1,0 +1,92 @@
+/* ── Site Header — transparent over hero, solid on scroll ── */
+
+.site-header {
+  --gold: #c8a94b;
+  --gold-dark: #a8862f;
+  --cream: #f5ede0;
+  --font-script: 'Caveat', 'Segoe Script', cursive;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-sticky);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-lg) var(--space-2xl);
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition: background var(--transition-base), border-color var(--transition-base), backdrop-filter var(--transition-base);
+}
+
+.site-header--scrolled {
+  background: rgba(15, 10, 4, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom-color: rgba(200, 169, 75, 0.15);
+}
+
+.site-header__logo {
+  font-family: var(--font-script);
+  font-size: 2.75rem;
+  font-weight: 700;
+  color: var(--cream);
+  text-decoration: none;
+  line-height: 1;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+}
+
+.site-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xl);
+}
+
+.site-header__signin {
+  color: var(--cream);
+  font-size: var(--text-lg);
+  text-decoration: none;
+  opacity: 0.9;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35);
+}
+
+.site-header__signin:hover {
+  opacity: 1;
+  color: var(--cream);
+}
+
+.site-header__cta {
+  background: var(--gold);
+  color: #2a2210;
+  font-weight: 700;
+  font-size: var(--text-lg);
+  padding: 12px 32px;
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  transition: background var(--transition-fast), transform var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.site-header__cta:hover {
+  background: var(--gold-dark);
+  color: #2a2210;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+  .site-header {
+    padding: var(--space-md) var(--space-lg);
+  }
+
+  .site-header__logo {
+    font-size: 2rem;
+  }
+
+  .site-header__signin {
+    display: none;
+  }
+}

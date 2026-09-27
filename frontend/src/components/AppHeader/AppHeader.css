@@ -1,0 +1,150 @@
+/* ── App Header — warm theme dashboard top bar ───────────────── */
+
+.app-header {
+  --gold: #c8a94b;
+  --gold-dark: #a8862f;
+  --cream: #f5ede0;
+  --font-script: 'Caveat', 'Segoe Script', cursive;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-lg) var(--space-2xl);
+  background: #14100a;
+  border-bottom: 1px solid rgba(200, 169, 75, 0.15);
+}
+
+.app-header__logo {
+  font-family: var(--font-script);
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--cream);
+  text-decoration: none;
+  line-height: 1;
+}
+
+.app-header__user {
+  position: relative;
+}
+
+.app-header__user-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 6px 8px 6px 6px;
+  border-radius: var(--radius-full);
+  background: rgba(245, 237, 224, 0.05);
+  border: 1px solid rgba(200, 169, 75, 0.2);
+  cursor: pointer;
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+
+.app-header__user-btn:hover {
+  background: rgba(245, 237, 224, 0.09);
+  border-color: rgba(200, 169, 75, 0.4);
+}
+
+.app-header__avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-full);
+  background: var(--gold);
+  color: #2a2210;
+  font-weight: 700;
+  font-size: var(--text-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-header__email {
+  font-size: var(--text-sm);
+  color: var(--cream);
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.app-header__chevron {
+  color: rgba(245, 237, 224, 0.6);
+  transition: transform var(--transition-fast);
+}
+
+.app-header__chevron--open {
+  transform: rotate(180deg);
+}
+
+.app-header__menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 160px;
+  background: #1c1610;
+  border: 1px solid rgba(200, 169, 75, 0.2);
+  border-radius: var(--radius-md);
+  padding: var(--space-xs);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+  z-index: var(--z-dropdown);
+}
+
+.app-header__menu-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  background: none;
+  border: none;
+  color: var(--cream);
+  font-size: var(--text-sm);
+  font-family: var(--font-sans);
+  cursor: pointer;
+  text-align: left;
+  transition: background var(--transition-fast);
+}
+
+.app-header__menu-item:hover {
+  background: rgba(245, 237, 224, 0.08);
+}
+
+@media (max-width: 640px) {
+  .app-header {
+    padding: var(--space-md) var(--space-lg);
+  }
+
+  .app-header__email {
+    display: none;
+  }
+}
+
+.app-header__prefs {
+  display: flex;
+  gap: 10px;
+  margin-left: auto;
+  margin-right: 14px;
+}
+
+.app-header__seg {
+  display: inline-flex;
+  border: 1px solid rgba(245, 237, 224, 0.25);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.app-header__seg button {
+  padding: 5px 11px;
+  border: none;
+  background: transparent;
+  color: var(--cream, #f5ede0);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.app-header__seg button.is-active {
+  background: var(--gold, #c8a94b);
+  color: #1c1511;
+  font-weight: 700;
+}

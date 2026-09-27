@@ -1,0 +1,344 @@
+/* ── My Rooms Page — warm theme dashboard ────────────────────── */
+
+.myrooms-page {
+  --gold: #c8a94b;
+  --gold-dark: #a8862f;
+  --cream: #f5ede0;
+
+  position: relative;
+  min-height: 100vh;
+  background: #0c0a06;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.myrooms-page__bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background-color: #0c0a06;
+}
+
+.myrooms-page__bg-img {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: contrast(1.08) saturate(1.15) brightness(1.03);
+}
+
+.myrooms-page__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(10, 6, 8, 0.55) 0%, rgba(10, 6, 8, 0.4) 40%, rgba(10, 6, 8, 0.72) 100%);
+}
+
+.myrooms-page .app-header {
+  position: relative;
+  /* Must beat .myrooms-page__inner's z-index (2) — otherwise the header's
+     own stacking context ties with its sibling and, per DOM order, the
+     later-painted page content intercepts clicks on the dropdown menu
+     even though the menu is visually drawn on top of it. */
+  z-index: 20;
+  background: rgba(20, 12, 14, 0.5);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.myrooms-page__inner {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-2xl) var(--space-xl) var(--space-4xl);
+}
+
+/* ── Header ── */
+.myrooms-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: var(--space-xl);
+  margin-bottom: var(--space-2xl);
+}
+
+.myrooms-header__eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: var(--space-sm);
+}
+
+.myrooms-header__title {
+  font-size: var(--text-4xl);
+  font-weight: 800;
+  color: var(--cream);
+  margin-bottom: var(--space-sm);
+}
+
+.myrooms-header__subtitle {
+  font-size: var(--text-base);
+  color: rgba(245, 237, 224, 0.6);
+}
+
+.myrooms-header__cta {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  background: var(--gold);
+  color: #2a2210;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: var(--text-base);
+  padding: 12px 24px;
+  border: none;
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+.myrooms-header__cta:hover {
+  background: var(--gold-dark);
+  color: #2a2210;
+  transform: translateY(-1px);
+}
+
+/* ── Grid Gallery ── */
+.myrooms-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-xl);
+}
+
+/* ── Room Card ── */
+.room-card {
+  border-radius: var(--radius-lg);
+  background: rgba(245, 237, 224, 0.03);
+  border: 1px solid rgba(200, 169, 75, 0.15);
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color var(--transition-base), transform var(--transition-base);
+}
+
+.room-card:hover {
+  border-color: rgba(200, 169, 75, 0.4);
+  transform: translateY(-4px);
+}
+
+.room-card:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.room-card__thumbnail {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background-color: rgba(200, 169, 75, 0.08);
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.room-card__thumbnail-icon {
+  color: rgba(200, 169, 75, 0.5);
+}
+
+.room-card__badge {
+  position: absolute;
+  top: var(--space-md);
+  left: var(--space-md);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  background: rgba(12, 10, 6, 0.7);
+  color: var(--cream);
+  backdrop-filter: blur(6px);
+}
+
+.room-card__badge--progress {
+  color: var(--gold);
+}
+
+.room-card__badge--done {
+  color: #7fd88f;
+}
+
+.room-card__menu-wrap {
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+}
+
+.room-card__menu-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  background: rgba(12, 10, 6, 0.7);
+  border: none;
+  color: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition: background var(--transition-fast);
+}
+
+.room-card__menu-btn:hover {
+  background: rgba(12, 10, 6, 0.9);
+}
+
+.room-card__menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 150px;
+  background: #1c1610;
+  border: 1px solid rgba(200, 169, 75, 0.2);
+  border-radius: var(--radius-md);
+  padding: var(--space-xs);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+  z-index: 5;
+}
+
+.room-card__menu-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  background: none;
+  border: none;
+  color: var(--cream);
+  font-size: var(--text-sm);
+  font-family: var(--font-sans);
+  cursor: pointer;
+  text-align: left;
+  text-decoration: none;
+  transition: background var(--transition-fast);
+}
+
+.room-card__menu-item:hover {
+  background: rgba(245, 237, 224, 0.08);
+}
+
+.room-card__menu-item--danger:hover {
+  color: #f28b82;
+}
+
+.room-card__body {
+  padding: var(--space-lg);
+}
+
+.room-card__name {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--cream);
+  margin-bottom: var(--space-xs);
+}
+
+.room-card__meta {
+  font-size: var(--text-sm);
+  color: rgba(245, 237, 224, 0.55);
+  margin-bottom: var(--space-md);
+}
+
+.room-card__budget-text {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--gold);
+  margin-bottom: var(--space-sm);
+}
+
+.room-card__budget-bar {
+  width: 100%;
+  height: 4px;
+  border-radius: var(--radius-full);
+  background: rgba(245, 237, 224, 0.1);
+  overflow: hidden;
+}
+
+.room-card__budget-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  background: var(--gold);
+}
+
+.myrooms-page__loading {
+  text-align: center;
+  color: rgba(245, 237, 224, 0.6);
+  padding: var(--space-4xl) var(--space-xl);
+}
+
+.myrooms-page__error {
+  font-size: var(--text-sm);
+  color: #f28b82;
+  background: rgba(242, 139, 130, 0.1);
+  border: 1px solid rgba(242, 139, 130, 0.3);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+
+/* ── Empty State ── */
+.myrooms-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-4xl) var(--space-xl);
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.myrooms-empty__icon {
+  width: 80px;
+  height: 80px;
+  border-radius: var(--radius-xl);
+  background: rgba(200, 169, 75, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold);
+  margin-bottom: var(--space-xl);
+  animation: float 4s ease-in-out infinite;
+}
+
+.myrooms-empty__title {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--cream);
+  margin-bottom: var(--space-sm);
+}
+
+.myrooms-empty__text {
+  font-size: var(--text-base);
+  color: rgba(245, 237, 224, 0.6);
+  max-width: 400px;
+  margin-bottom: var(--space-xl);
+  line-height: 1.7;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .myrooms-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-md);
+  }
+
+  .myrooms-grid {
+    grid-template-columns: 1fr;
+  }
+}

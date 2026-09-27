@@ -1,0 +1,396 @@
+.rb {
+  margin-top: 22px;
+  padding: 24px;
+  border-radius: 20px;
+  border: 1px solid rgba(220, 204, 170, 0.14);
+  background: linear-gradient(150deg, rgba(39, 29, 24, 0.94), rgba(24, 18, 16, 0.9));
+  scroll-margin-top: 16px;
+}
+
+.rb-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.rb-head span {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  color: #f0b35a;
+}
+
+.rb-head h2 {
+  margin: 6px 0 4px;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-white);
+}
+
+.rb-head p {
+  margin: 0;
+  font-size: 12px;
+  color: var(--color-warm-gray);
+}
+
+.rb-picked {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px 8px 8px;
+  border-radius: 12px;
+  border: 1px solid rgba(240, 179, 90, 0.5);
+  background: rgba(240, 179, 90, 0.08);
+}
+
+.rb-picked-swatch {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.rb-picked div {
+  display: grid;
+  gap: 1px;
+}
+
+.rb-picked small {
+  font-size: 10px;
+  color: #f0b35a;
+}
+
+.rb-picked strong {
+  font-size: 13px;
+  color: var(--color-white);
+}
+
+.rb-picked em {
+  font-style: normal;
+  font-size: 12px;
+  color: var(--color-cream);
+}
+
+.rb-picked button {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: transparent;
+  color: var(--color-cream);
+  cursor: pointer;
+}
+
+/* Filters stay pinned while the grid scrolls, like a shop app. */
+.rb-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  display: grid;
+  gap: 12px;
+  margin: 0 -24px 18px;
+  padding: 12px 24px;
+  background: rgba(24, 18, 16, 0.96);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(220, 204, 170, 0.1);
+}
+
+.rb-tabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.rb-tabs button {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: transparent;
+  color: var(--color-cream);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.rb-tabs button small {
+  font-size: 10px;
+  opacity: 0.55;
+}
+
+.rb-tabs button.is-active {
+  background: var(--color-cream);
+  border-color: var(--color-cream);
+  color: #1c1511;
+  font-weight: 700;
+}
+
+.rb-controls {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.rb-search {
+  flex: 1 1 240px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+  height: 38px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--color-warm-gray);
+}
+
+.rb-search input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--color-white);
+  font: inherit;
+  font-size: 13px;
+}
+
+.rb-controls select {
+  height: 38px;
+  padding: 0 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: #221a16;
+  color: var(--color-cream);
+  font: inherit;
+  font-size: 13px;
+}
+
+.rb-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--color-cream);
+  cursor: pointer;
+}
+
+.rb-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 16px;
+}
+
+.rb-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  transition: border-color 0.15s, transform 0.15s;
+}
+
+.rb-card:hover {
+  border-color: rgba(220, 204, 170, 0.35);
+  transform: translateY(-2px);
+}
+
+.rb-card.is-selected {
+  border-color: #f0b35a;
+  box-shadow: 0 0 0 2px rgba(240, 179, 90, 0.35);
+}
+
+.rb-card.is-over {
+  opacity: 0.45;
+}
+
+.rb-card-visual {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 4 / 3;
+  border: none;
+  color: rgba(20, 15, 12, 0.55);
+  cursor: pointer;
+}
+
+.rb-card-visual:disabled {
+  cursor: not-allowed;
+}
+
+.rb-store {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+  background: #2b2926;
+}
+
+.rb-store.is-ikea { background: #0058a3; }
+.rb-store.is-homepro { background: #1e5fa8; }
+.rb-store.is-shopee { background: #ee4d2d; }
+.rb-store.is-lazada { background: #0f146d; }
+
+.rb-check {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #f0b35a;
+  color: #1c1511;
+}
+
+.rb-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+  padding: 12px;
+}
+
+.rb-card-body small {
+  font-size: 10px;
+  color: var(--color-warm-gray);
+}
+
+.rb-card-body h3 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--color-white);
+}
+
+.rb-card-body p {
+  margin: 0;
+  font-size: 11px;
+  color: var(--color-warm-gray);
+}
+
+.rb-card-body strong {
+  margin-top: 4px;
+  font-size: 17px;
+  color: var(--color-cream);
+}
+
+.rb-card-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 10px;
+}
+
+.rb-card-actions button {
+  flex: 1;
+  height: 32px;
+  border-radius: 8px;
+  border: none;
+  background: var(--color-cream);
+  color: #1c1511;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.rb-card.is-selected .rb-card-actions button {
+  background: #f0b35a;
+}
+
+.rb-card-actions button:disabled {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--color-warm-gray);
+  cursor: not-allowed;
+}
+
+.rb-card-actions a {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 11px;
+  color: var(--color-taupe);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  white-space: nowrap;
+}
+
+.rb-empty {
+  padding: 30px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--color-warm-gray);
+}
+
+@media (max-width: 680px) {
+  .rb {
+    padding: 16px;
+  }
+
+  .rb-toolbar {
+    margin: 0 -16px 14px;
+    padding: 10px 16px;
+  }
+
+  .rb-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .rb-head h2 {
+    font-size: 18px;
+  }
+}
+
+/* Inside the Decision side panel, beside the room photo: no card of its own,
+   filters pinned to the top of the panel's own scroll, tighter grid. */
+.rb.is-compact {
+  margin-top: 16px;
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+.rb.is-compact .rb-head h2 {
+  font-size: 17px;
+}
+
+.rb.is-compact .rb-toolbar {
+  top: -25px;
+  margin: 0 -25px 14px;
+  padding: 10px 25px;
+  background: rgb(32, 24, 21);
+}
+
+.rb.is-compact .rb-grid {
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+.rb.is-compact .rb-card-body h3 {
+  font-size: 13px;
+}
+
+.rb-card-visual { overflow: hidden; background-color: #fff; }
+.rb-photo { width: 100%; height: 100%; object-fit: contain; padding: 8px; box-sizing: border-box; mix-blend-mode: multiply; }
+.rb-picked-swatch { overflow: hidden; background-color: #fff; }
+.rb-picked-swatch img { width: 100%; height: 100%; object-fit: cover; }

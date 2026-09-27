@@ -1,0 +1,99 @@
+/* ── Input Component ───────────────────────────────────────── */
+
+.input-group {
+  position: relative;
+  width: 100%;
+}
+
+.input-field {
+  width: 100%;
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  color: var(--color-text-primary);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  transition: all var(--transition-base);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  outline: none;
+  box-sizing: border-box;
+}
+
+.input-field::placeholder {
+  color: var(--color-text-tertiary);
+}
+
+.input-field:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-accent-subtle), 0 0 15px var(--color-accent-glow);
+  background: var(--glass-bg-hover);
+}
+
+/* ── With Icons ── */
+.input-group--has-icon-left .input-field {
+  padding-left: 44px;
+}
+
+.input-group--has-icon-right .input-field {
+  padding-right: 44px;
+}
+
+.input-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-text-tertiary);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  transition: color var(--transition-base);
+}
+
+.input-icon--left {
+  left: 14px;
+}
+
+.input-icon--right {
+  right: 14px;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.input-icon--right:hover {
+  color: var(--color-text-secondary);
+}
+
+.input-field:focus ~ .input-icon,
+.input-group:focus-within .input-icon {
+  color: var(--color-accent);
+}
+
+/* ── Label ── */
+.input-label {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-sm);
+}
+
+/* ── Error State ── */
+.input-field--error {
+  border-color: var(--color-error);
+}
+
+.input-field--error:focus {
+  box-shadow: 0 0 0 3px var(--color-error-subtle);
+  border-color: var(--color-error);
+}
+
+.input-error-message {
+  font-size: var(--text-sm);
+  color: var(--color-error);
+  margin-top: var(--space-xs);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}

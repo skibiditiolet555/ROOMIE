@@ -1,0 +1,459 @@
+/* ── Room Design Setup Page — warm theme ─────────────────────── */
+
+.room-design-page {
+  --gold: #c8a94b;
+  --gold-dark: #a8862f;
+  --cream: #f5ede0;
+
+  position: relative;
+  min-height: 100vh;
+  background: #0c0a06;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.room-design-page__inner {
+  position: relative;
+  z-index: 2;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: var(--space-2xl) var(--space-xl) var(--space-4xl);
+}
+
+.room-design-page__back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  color: rgba(245, 237, 224, 0.65);
+  font-size: var(--text-sm);
+  text-decoration: none;
+  margin-bottom: var(--space-xl);
+  transition: color var(--transition-fast);
+}
+
+.room-design-page__back-link:hover {
+  color: var(--cream);
+}
+
+.room-design-page__eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: var(--space-sm);
+}
+
+.room-design-page__title {
+  font-size: var(--text-3xl);
+  font-weight: 800;
+  color: var(--cream);
+  margin-bottom: var(--space-sm);
+}
+
+.room-design-page__subtitle {
+  font-size: var(--text-base);
+  color: rgba(245, 237, 224, 0.6);
+  margin-bottom: var(--space-2xl);
+  line-height: 1.6;
+}
+
+.room-design-page__error {
+  font-size: var(--text-sm);
+  color: #f28b82;
+  background: rgba(242, 139, 130, 0.1);
+  border: 1px solid rgba(242, 139, 130, 0.3);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  margin-bottom: var(--space-xl);
+  line-height: 1.6;
+}
+
+.room-design-page__missing {
+  color: var(--cream);
+  margin-bottom: var(--space-lg);
+}
+
+/* ── Fields ── */
+.room-design-field {
+  margin-bottom: var(--space-2xl);
+}
+
+.room-design-field__label {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--cream);
+  margin-bottom: var(--space-sm);
+}
+
+.room-design-field__hint {
+  font-size: var(--text-sm);
+  color: rgba(245, 237, 224, 0.55);
+  margin-bottom: var(--space-md);
+}
+
+.room-design-field__input,
+.room-design-field__textarea {
+  width: 100%;
+  background: rgba(245, 237, 224, 0.06);
+  border: 1px solid rgba(200, 169, 75, 0.25);
+  border-radius: var(--radius-md);
+  color: var(--cream);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  padding: 12px 16px;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color var(--transition-fast), background var(--transition-fast);
+}
+
+.room-design-field__input::placeholder,
+.room-design-field__textarea::placeholder {
+  color: rgba(245, 237, 224, 0.4);
+}
+
+.room-design-field__input:focus,
+.room-design-field__textarea:focus {
+  border-color: var(--gold);
+  background: rgba(245, 237, 224, 0.09);
+}
+
+.room-design-field__textarea {
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.room-design-field__budget-wrap {
+  position: relative;
+}
+
+.room-design-field__currency {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--gold);
+  font-weight: 700;
+  pointer-events: none;
+}
+
+.room-design-field__input--budget {
+  padding-left: 32px;
+}
+
+.room-design-field__budget-usd {
+  margin-top: 6px;
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+}
+
+/* remove number input spinners for a cleaner look */
+.room-design-field__input--budget::-webkit-outer-spin-button,
+.room-design-field__input--budget::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* ── Your Photos ── */
+.room-design-photos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-sm);
+}
+
+.room-design-photos__btn {
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: var(--radius-md);
+}
+
+.room-design-photos__img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(200, 169, 75, 0.2);
+  display: block;
+  transition: opacity var(--transition-fast);
+}
+
+.room-design-photos__btn:hover .room-design-photos__img {
+  opacity: 0.85;
+}
+
+/* ── Photo Lightbox ── */
+.room-design-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xl);
+  animation: fadeIn 0.2s ease-out;
+}
+
+.room-design-lightbox__img {
+  max-width: min(90vw, 900px);
+  max-height: 85vh;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.room-design-lightbox__close {
+  position: absolute;
+  top: var(--space-xl);
+  right: var(--space-xl);
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--cream, #f5ede0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.room-design-lightbox__close:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ── Style Picker ── */
+.room-design-styles {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-md);
+}
+
+.room-design-style {
+  position: relative;
+  border-radius: var(--radius-md);
+  border: 2px solid rgba(200, 169, 75, 0.2);
+  background: none;
+  padding: 0;
+  overflow: hidden;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.room-design-style:hover {
+  border-color: rgba(200, 169, 75, 0.5);
+  transform: translateY(-2px);
+}
+
+.room-design-style--selected {
+  border-color: var(--gold);
+}
+
+.room-design-style__set {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2px;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+}
+
+.room-design-style__set--1 {
+  grid-template-columns: 1fr;
+}
+
+.room-design-style__thumb {
+  background-size: cover;
+  background-position: center;
+}
+
+.room-design-style__label {
+  display: block;
+  padding: 10px 12px;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--cream);
+  background: rgba(12, 10, 6, 0.7);
+}
+
+.room-design-style__check {
+  position: absolute;
+  top: var(--space-sm);
+  right: var(--space-sm);
+  width: 22px;
+  height: 22px;
+  border-radius: var(--radius-full);
+  background: var(--gold);
+  color: #2a2210;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.room-design-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.room-design-category {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 13px;
+  border: 1px solid rgba(200, 169, 75, 0.3);
+  border-radius: var(--radius-full);
+  color: var(--cream);
+  background: rgba(245, 237, 224, 0.05);
+  font-size: var(--text-sm);
+  cursor: pointer;
+}
+
+.room-design-category:has(input:checked) {
+  border-color: var(--gold);
+  background: rgba(200, 169, 75, 0.14);
+}
+
+.room-design-category input {
+  accent-color: var(--gold);
+}
+
+/* ── Actions ── */
+.room-design-page__actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--space-lg);
+  margin-top: var(--space-2xl);
+}
+
+.room-design-page__cancel {
+  color: rgba(245, 237, 224, 0.6);
+  font-size: var(--text-base);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.room-design-page__cancel:hover {
+  color: var(--cream);
+}
+
+.room-design-page__next {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  background: var(--gold);
+  color: #2a2210;
+  font-weight: 700;
+  font-size: var(--text-base);
+  padding: 12px 28px;
+  border-radius: var(--radius-full);
+  border: none;
+  cursor: pointer;
+  transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+.room-design-page__next:hover:not(:disabled) {
+  background: var(--gold-dark);
+  transform: translateY(-1px);
+}
+
+.room-design-page__next:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.room-design-page__spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.room-design-page__error {
+  font-size: var(--text-sm);
+  color: #f28b82;
+  background: rgba(242, 139, 130, 0.1);
+  border: 1px solid rgba(242, 139, 130, 0.3);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm) var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+/* ── Generating State ── */
+.room-design-page__generating {
+  position: relative;
+  min-height: calc(100vh - 76px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.room-design-page__generating-image {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: blur(6px);
+  transform: scale(1.05);
+  animation: roomie-pulse 2.4s ease-in-out infinite;
+}
+
+.room-design-page__generating-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 6, 2, 0.72);
+}
+
+.room-design-page__generating-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: var(--space-xl);
+}
+
+.room-design-page__generating-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: var(--radius-full);
+  background: rgba(200, 169, 75, 0.16);
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--space-lg);
+  animation: spin 2.2s linear infinite;
+}
+
+.room-design-page__generating-title {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--cream);
+  margin-bottom: var(--space-sm);
+}
+
+.room-design-page__generating-text {
+  font-size: var(--text-base);
+  color: rgba(245, 237, 224, 0.65);
+}
+
+@keyframes roomie-pulse {
+  0%, 100% { filter: blur(6px) brightness(1); }
+  50% { filter: blur(10px) brightness(1.15); }
+}
+
+@media (max-width: 640px) {
+  .room-design-page__inner {
+    padding: var(--space-xl) var(--space-lg) var(--space-2xl);
+  }
+
+  .room-design-styles {
+    grid-template-columns: 1fr 1fr;
+  }
+}

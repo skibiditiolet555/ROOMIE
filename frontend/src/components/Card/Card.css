@@ -1,0 +1,75 @@
+/* ── Card Component ────────────────────────────────────────── */
+
+.card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--gradient-surface);
+  opacity: 0;
+  transition: opacity var(--transition-base);
+  pointer-events: none;
+}
+
+.card:hover {
+  border-color: var(--glass-border-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+/* ── Clickable Card ── */
+.card--clickable {
+  cursor: pointer;
+}
+
+.card--clickable:hover {
+  box-shadow: var(--shadow-lg), 0 0 20px var(--color-accent-glow);
+}
+
+/* ── Glow Card ── */
+.card--glow {
+  box-shadow: var(--shadow-glow);
+}
+
+.card--glow:hover {
+  box-shadow: var(--shadow-glow-lg);
+}
+
+/* ── Padding Variants ── */
+.card--padding-sm {
+  padding: var(--space-md);
+}
+
+.card--padding-md {
+  padding: var(--space-lg);
+}
+
+.card--padding-lg {
+  padding: var(--space-xl);
+}
+
+/* ── No Hover ── */
+.card--static {
+  cursor: default;
+}
+
+.card--static:hover {
+  transform: none;
+  box-shadow: none;
+  border-color: var(--glass-border);
+}

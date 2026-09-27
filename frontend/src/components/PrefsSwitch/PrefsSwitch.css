@@ -1,0 +1,38 @@
+.prefs-switch {
+  display: flex;
+  gap: 10px;
+}
+
+.prefs-switch.is-floating {
+  position: fixed;
+  top: 12px;
+  right: 16px;
+  z-index: 50;
+  padding: 4px;
+  border-radius: 999px;
+  background: rgba(24, 18, 16, 0.85);
+  backdrop-filter: blur(8px);
+}
+
+.prefs-seg {
+  display: inline-flex;
+  border: 1px solid rgba(245, 237, 224, 0.25);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.prefs-seg button {
+  padding: 5px 11px;
+  border: none;
+  background: transparent;
+  color: #f5ede0;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.prefs-seg button.is-active {
+  background: #c8a94b;
+  color: #1c1511;
+  font-weight: 700;
+}

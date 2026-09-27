@@ -1,0 +1,55 @@
+/* ── Login Page ────────────────────────────────────────────── */
+
+.login-page__title {
+  text-align: center;
+  font-size: var(--text-4xl);
+  font-weight: 800;
+  color: var(--cream, var(--color-text-primary));
+  margin-bottom: var(--space-xl);
+}
+
+.login-page__error {
+  font-size: var(--text-sm);
+  color: #f28b82;
+  background: rgba(242, 139, 130, 0.1);
+  border: 1px solid rgba(242, 139, 130, 0.3);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm) var(--space-md);
+  margin-bottom: var(--space-lg);
+  text-align: center;
+}
+
+.login-page__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.login-page__forgot {
+  text-align: center;
+  font-size: var(--text-sm);
+  text-decoration: none;
+  margin-top: calc(-1 * var(--space-sm));
+}
+
+.login-page__forgot:hover {
+  text-decoration: underline;
+}
+
+/* ── Footer Link ── */
+.auth-footer-text {
+  text-align: center;
+  font-size: var(--text-sm);
+  color: rgba(245, 237, 224, 0.6);
+  line-height: 1.8;
+  margin-top: var(--space-xl);
+}
+
+.auth-footer-text a {
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.auth-footer-text a:hover {
+  text-decoration: underline;
+}

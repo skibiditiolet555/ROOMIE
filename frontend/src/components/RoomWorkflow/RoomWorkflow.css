@@ -1,0 +1,64 @@
+.room-workflow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0 0 var(--space-2xl);
+}
+
+.room-workflow__step {
+  min-width: 0;
+  color: rgba(245, 237, 224, 0.45);
+  font-size: var(--text-xs);
+  text-align: center;
+}
+
+.room-workflow__step > a,
+.room-workflow__step > :not(a) {
+  min-height: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.room-workflow__step > a:hover {
+  color: #f5ede0;
+}
+
+.room-workflow__number {
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  font-weight: 700;
+}
+
+.room-workflow__step--current {
+  color: #c8a94b;
+  font-weight: 700;
+}
+
+.room-workflow__step--complete {
+  color: rgba(245, 237, 224, 0.75);
+}
+
+.room-workflow__step--complete .room-workflow__number {
+  color: #0c0a06;
+  background: #c8a94b;
+  border-color: #c8a94b;
+}
+
+@media (max-width: 520px) {
+  .room-workflow {
+    gap: 2px;
+  }
+
+  .room-workflow__step {
+    font-size: 10px;
+  }
+}

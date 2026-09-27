@@ -1,0 +1,68 @@
+/* ── Register Page ─────────────────────────────────────────── */
+
+.register-page__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.register-page__title {
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  margin-bottom: 0;
+}
+
+.register-page__subtitle {
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-md);
+}
+
+.register-page__error {
+  font-size: var(--text-sm);
+  color: #f28b82;
+  background: rgba(242, 139, 130, 0.1);
+  border: 1px solid rgba(242, 139, 130, 0.3);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm) var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.register-page__name-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+
+.register-page__terms {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  line-height: 1.5;
+}
+
+.register-page__terms input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  accent-color: var(--color-accent);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.register-page__terms a {
+  color: var(--color-accent-light);
+  text-decoration: none;
+}
+
+.register-page__terms a:hover {
+  color: var(--color-accent);
+}
+
+@media (max-width: 480px) {
+  .register-page__name-row {
+    grid-template-columns: 1fr;
+  }
+}

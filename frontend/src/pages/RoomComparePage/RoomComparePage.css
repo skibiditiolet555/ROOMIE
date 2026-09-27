@@ -1,0 +1,440 @@
+/* ── Room Compare Page — warm theme ──────────────────────────── */
+
+.room-compare-page {
+  --gold: #c8a94b;
+  --gold-dark: #a8862f;
+  --cream: #f5ede0;
+
+  position: relative;
+  min-height: 100vh;
+  background: #0c0a06;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.room-compare-page__inner {
+  position: relative;
+  z-index: 2;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: var(--space-2xl) var(--space-xl) var(--space-4xl);
+}
+
+.room-compare-page__back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  color: rgba(245, 237, 224, 0.65);
+  font-size: var(--text-sm);
+  text-decoration: none;
+  margin-bottom: var(--space-xl);
+  transition: color var(--transition-fast);
+}
+
+.room-compare-page__back-link:hover {
+  color: var(--cream);
+}
+
+.room-compare-page__eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: var(--space-sm);
+}
+
+.room-compare-page__title {
+  font-size: var(--text-3xl);
+  font-weight: 800;
+  color: var(--cream);
+  margin-bottom: var(--space-sm);
+}
+
+.room-compare-page__prompt {
+  font-size: var(--text-base);
+  color: rgba(245, 237, 224, 0.6);
+  font-style: italic;
+  margin-bottom: var(--space-2xl);
+}
+
+/* ── Photo Views Selector (for multi-photo rooms) ── */
+.room-compare-views {
+  display: flex;
+  gap: var(--space-md);
+  overflow-x: auto;
+  padding: var(--space-md) 0;
+  margin-bottom: var(--space-lg);
+  scroll-behavior: smooth;
+}
+
+.room-compare-views__item {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  background: none;
+  border: 2px solid rgba(200, 169, 75, 0.2);
+  border-radius: var(--radius-md);
+  padding: 0;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  width: 100px;
+}
+
+.room-compare-views__item:hover {
+  border-color: rgba(200, 169, 75, 0.5);
+}
+
+.room-compare-views__item--active {
+  border-color: var(--gold);
+  box-shadow: 0 0 8px rgba(200, 169, 75, 0.3);
+}
+
+.room-compare-views__img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+}
+
+.room-compare-views__label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--cream);
+  background: rgba(12, 10, 6, 0.8);
+  padding: 4px 8px;
+  width: 100%;
+  white-space: nowrap;
+}
+
+.room-compare-views__ok {
+  color: #52c41a;
+}
+
+.room-compare-views__warn {
+  color: #faad14;
+}
+
+.room-compare-page__missing {
+  color: var(--cream);
+  margin-bottom: var(--space-lg);
+}
+
+/* ── Big Before/After Frame ── */
+.room-compare-frame {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid rgba(200, 169, 75, 0.2);
+  background: rgba(245, 237, 224, 0.03);
+  padding: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.room-compare-frame__pane {
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  background: #1c1610;
+}
+
+.room-compare-frame__pane--btn {
+  padding: 0;
+  border: none;
+  display: block;
+  width: 100%;
+  cursor: pointer;
+}
+
+.room-compare-frame__pane--btn:hover .room-compare-frame__img {
+  filter: brightness(0.85);
+}
+
+/* ── Photo Lightbox ── */
+.room-compare-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xl);
+  animation: fadeIn 0.2s ease-out;
+}
+
+.room-compare-lightbox__img {
+  max-width: min(90vw, 900px);
+  max-height: 85vh;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.room-compare-lightbox__close {
+  position: absolute;
+  top: var(--space-xl);
+  right: var(--space-xl);
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.room-compare-lightbox__close:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.room-compare-frame__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: filter var(--transition-base);
+}
+
+.room-compare-frame__tag {
+  position: absolute;
+  top: var(--space-md);
+  left: var(--space-md);
+  z-index: 1;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  background: rgba(12, 10, 6, 0.75);
+  color: var(--cream);
+}
+
+.room-compare-frame__tag--after {
+  background: var(--gold);
+  color: #2a2210;
+}
+
+.room-compare-frame__loading {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  background: rgba(10, 6, 2, 0.75);
+  color: var(--cream);
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+.room-compare-frame__loading-icon {
+  color: var(--gold);
+  animation: spin 1.6s linear infinite;
+}
+
+.room-compare-frame__empty {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  color: rgba(245, 237, 224, 0.6);
+  font-size: var(--text-sm);
+  text-align: center;
+  padding: var(--space-xl);
+}
+
+.room-compare-page__error {
+  color: #ff8a8a;
+  background: rgba(255, 90, 90, 0.1);
+  border: 1px solid rgba(255, 90, 90, 0.3);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-lg);
+}
+
+/* ── Gallery ── */
+.room-compare-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-2xl);
+}
+
+.room-compare-gallery__item {
+  width: 96px;
+  border-radius: var(--radius-md);
+  border: 2px solid rgba(200, 169, 75, 0.2);
+  background: none;
+  padding: 0;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color var(--transition-fast);
+}
+
+.room-compare-gallery__item:hover {
+  border-color: rgba(200, 169, 75, 0.5);
+}
+
+.room-compare-gallery__item--active {
+  border-color: var(--gold);
+}
+
+.room-compare-gallery__img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+}
+
+.room-compare-gallery__label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--cream);
+  background: rgba(12, 10, 6, 0.7);
+  padding: 4px 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Feedback / regenerate comment ── */
+.room-compare-feedback {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-top: var(--space-lg);
+  padding: var(--space-md);
+  border-radius: var(--radius-lg);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+}
+
+.room-compare-feedback__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.room-compare-feedback__input {
+  width: 100%;
+  resize: vertical;
+  min-height: 44px;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--glass-border);
+  background: rgba(0, 0, 0, 0.2);
+  color: var(--color-text-primary);
+  font: inherit;
+  font-size: 0.9rem;
+}
+
+.room-compare-feedback__input::placeholder {
+  color: var(--color-text-tertiary);
+}
+
+.room-compare-feedback__input:disabled {
+  opacity: 0.6;
+}
+
+/* ── Actions ── */
+.room-compare-page__actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.room-compare-page__regenerate {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  background: rgba(245, 237, 224, 0.06);
+  border: 1px solid rgba(200, 169, 75, 0.3);
+  color: var(--cream);
+  font-weight: 600;
+  font-size: var(--text-base);
+  padding: 12px 24px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+
+.room-compare-page__regenerate:hover:not(:disabled) {
+  background: rgba(245, 237, 224, 0.1);
+  border-color: var(--gold);
+}
+
+.room-compare-page__regenerate:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.room-compare-page__spin {
+  animation: spin 1.2s linear infinite;
+}
+
+.room-compare-page__next {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  background: var(--gold);
+  color: #2a2210;
+  font-weight: 700;
+  font-size: var(--text-base);
+  padding: 12px 28px;
+  border-radius: var(--radius-full);
+  border: none;
+  cursor: pointer;
+  transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+.room-compare-page__next:hover:not(:disabled) {
+  background: var(--gold-dark);
+  transform: translateY(-1px);
+}
+
+.room-compare-page__next:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 640px) {
+  .room-compare-frame {
+    grid-template-columns: 1fr;
+  }
+
+  .room-compare-page__actions {
+    flex-direction: column-reverse;
+  }
+
+  .room-compare-page__regenerate,
+  .room-compare-page__next {
+    width: 100%;
+    justify-content: center;
+  }
+}
