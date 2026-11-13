@@ -1,10 +1,14 @@
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL?.trim()
 const configuredUrl = import.meta.env.VITE_API_URL?.trim()
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL?.trim()
+  || 'https://dtwvvcfqokatlaikhlnm.supabase.co'
 
-export const API_BASE_URL = configuredUrl
-  || (supabaseUrl ? `${supabaseUrl.replace(/\/$/, '')}/functions/v1/roomie-api` : '')
-  || (import.meta.env.DEV ? 'http://localhost:8000' : '')
-export const SUPABASE_PUBLISHABLE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || ''
+// Production always uses the Supabase Edge Function. This prevents a stale
+// Netlify VITE_API_URL setting from routing requests back to the old backend.
+export const API_BASE_URL = import.meta.env.DEV
+  ? configuredUrl || 'http://localhost:8000'
+  : `${supabaseUrl.replace(/\/$/, '')}/functions/v1/roomie-api`
+export const SUPABASE_PUBLISHABLE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY
+  || 'sb_publishable_c2zRgC_Kz7nnVoPIT8ZPGg_QZJdJp0y'
 
 export function backendHeaders(token, json = true) {
   const headers = {}

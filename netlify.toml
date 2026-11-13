@@ -5,6 +5,8 @@
 
 [build.environment]
   NODE_VERSION = "22"
+  VITE_SUPABASE_URL = "https://dtwvvcfqokatlaikhlnm.supabase.co"
+  VITE_SUPABASE_PUBLISHABLE_KEY = "sb_publishable_c2zRgC_Kz7nnVoPIT8ZPGg_QZJdJp0y"
 
 [[redirects]]
   from = "/*"
